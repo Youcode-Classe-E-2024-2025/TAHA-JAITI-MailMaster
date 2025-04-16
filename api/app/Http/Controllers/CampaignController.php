@@ -73,6 +73,8 @@ class CampaignController extends Controller
         if ($campaign->newsletter->user_id !== $user->id) {
             return Res::error('Unauthorized', 403);
         }
-        
+
+        $campaign->delete();
+        return Res::success('Campaign deleted successfully');
     }
 }
