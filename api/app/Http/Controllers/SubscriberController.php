@@ -30,7 +30,9 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $res = $this->subscriberService->create($request);
+
+        
     }
 
     /**
