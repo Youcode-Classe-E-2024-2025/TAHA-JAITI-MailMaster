@@ -10,18 +10,18 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8080",
+            "url": "http://127.0.0.1:8000",
             "description": "Local server"
         }
     ],
     "paths": {
-        "/api/auth/register": {
+        "/api/register": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Register a new user",
-                "operationId": "5aafd2c41e1a62e87ddc9adac8e98dce",
+                "operationId": "300ad72ec3429ebe90ebce75d86a6b5b",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -150,13 +150,13 @@
                 }
             }
         },
-        "/api/auth/login": {
+        "/api/login": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Login a user",
-                "operationId": "a63ce152b2b76af3a534c8a867de091d",
+                "operationId": "7d9bcc75a6274ed1ea3733379d9a1a38",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -280,13 +280,13 @@
                 }
             }
         },
-        "/api/auth/logout": {
+        "/api/logout": {
             "post": {
                 "tags": [
                     "Authentication"
                 ],
                 "summary": "Logout a user",
-                "operationId": "fb0f5b09db3b6f33cdba8a3eaf71f2c8",
+                "operationId": "5742df35f851fb03bcfedebe193bb191",
                 "responses": {
                     "200": {
                         "description": "Successfully logged out",

@@ -4,7 +4,7 @@ namespace App\Swagger;
 
 /**
  * @OA\Post(
- *     path="/api/auth/register",
+ *     path="/api/register",
  *     summary="Register a new user",
  *     tags={"Authentication"},
  *     @OA\RequestBody(
@@ -54,7 +54,7 @@ namespace App\Swagger;
  * )
  *
  * @OA\Post(
- *     path="/api/auth/login",
+ *     path="/api/login",
  *     summary="Login a user",
  *     tags={"Authentication"},
  *     @OA\RequestBody(
@@ -103,7 +103,7 @@ namespace App\Swagger;
  * )
  *
  * @OA\Post(
- *     path="/api/auth/logout",
+ *     path="/api/logout",
  *     summary="Logout a user",
  *     tags={"Authentication"},
  *     security={{"bearerAuth": {}}},
