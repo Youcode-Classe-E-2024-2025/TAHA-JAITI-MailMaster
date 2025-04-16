@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Services\CampaignService;
 use Auth;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
 {
+
+    private CampaignService $campaignService;
+
+    public function __construct(CampaignService $campaignService) {
+        $this->campaignService = $campaignService;
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -25,7 +34,10 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $res = $this->campaignService->create($request);
+
+        return $res ? Res
+
     }
 
     /**
