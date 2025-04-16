@@ -53,9 +53,10 @@ class NewsletterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Newsletter $newsletter)
     {
-        //
+        $res = $this->newsletterService->update($request, $newsletter);
+        return $res ? Res::success('Newsletter updated successfully', $res) : Res::error('Failed to update newsletter');
     }
 
     /**
@@ -63,6 +64,11 @@ class NewsletterController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $newsletter = Newsletter::find($id);
+        if (!$newsletter) {
+            return Res::error('Newsletter not found');
+        }
+        $newsletter->delete();
+        return Res::success('Newsletter deleted successfully');
     }
 }

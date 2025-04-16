@@ -25,5 +25,15 @@ class NewsletterService
         return $newsletter ?? null;
     }
 
+    public function update(Request $request, Newsletter $newsletter)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        $newsletter->update($validated);
+        return $newsletter;
+    }
 
 }
