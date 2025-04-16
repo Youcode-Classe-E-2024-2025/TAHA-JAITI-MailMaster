@@ -1,1 +1,3 @@
-feat: Add API documentation for newsletters
+docs: Update documentation for new feature X
+
+Improved documentation for feature X to clarify its usage and benefits.  This addresses user confusion about setup and expected behavior.
