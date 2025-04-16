@@ -74,4 +74,10 @@ class SubscriberController extends Controller
 
         return Res::success(null, 'Subscriber deleted successfully');
     }
+
+    public function unsubscribe(Subscriber $subscriber)
+    {
+        $subscriber->update(['status' => 'unsubscribed']);
+        return Res::success(null, 'Unsubscribed successfully');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Res;
 use App\Models\Campaign;
 use App\Mail\NewsletterMail;
+use App\Models\Subscriber;
 use Illuminate\Http\Request;
 use App\Services\CampaignService;
 use Illuminate\Support\Facades\URL;
@@ -90,7 +91,10 @@ class CampaignController extends Controller
     public function preview(string $id)
     {
         $campaign = Campaign::findOrFail($id);
-        $subscriber = Auth::user();
+        $subscriber = Subscriber::where('id', Auth::user()->id)->first();
+        if (!$subscriber) {
+            return Res::error('Subscriber not found', 404);
+        }
 
         $trackingUrl = URL::temporarySignedRoute(
             'track.open',
