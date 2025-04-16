@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\Campaign;
+use App\Swagger\Subscriber;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,41 +15,29 @@ class NewsletterMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        public Campaign $campaign,
+        public Subscriber $subscriber,
+        public string $trackingUrl
+    ) {
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Newsletter Mail',
+            subject: $this->campaign->newsletter->title,
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.newsletter',
+            with: [
+                'newsletter' => $this->campaign->newsletter,
+                'trackingUrl' => $this->trackingUrl,
+                'unsubscribeUrl' => url('/api/unsubscribe/' . $this->subscriber->id),
+            ],
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
     }
 }
