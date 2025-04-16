@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Res;
 use App\Models\Campaign;
 use App\Services\CampaignService;
 use Auth;
@@ -36,7 +37,7 @@ class CampaignController extends Controller
     {
         $res = $this->campaignService->create($request);
 
-        return $res ? Res
+        return $res ? Res::success('Campaign created successfully', $res) : Res::error('Campaign creation failed');
 
     }
 
