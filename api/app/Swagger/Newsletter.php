@@ -2,9 +2,10 @@
 
 namespace App\Swagger;
 
+
 /**
  *
- * 
+ *
  *
  * @OA\Get(
  *     path="/api/newsletters",
