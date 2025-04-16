@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\Helpers\Res;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
+use App\Services\SubscriberService;
 
 class SubscriberController extends Controller
 {
 
-    private  $subscriberService;
+    private SubscriberService $subscriberService;
+
+    public function __construct(SubscriberService $subscriberService)
+    {
+        $this->subscriberService = $subscriberService;
+    }
 
     /**
      * Display a listing of the resource.
