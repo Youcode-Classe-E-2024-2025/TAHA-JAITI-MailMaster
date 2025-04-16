@@ -3,11 +3,11 @@
 namespace App\Services;
 
 use App\Helpers\Res;
-use App\Jobs\SendCampaignEmails;
 use App\Models\Campaign;
 use App\Models\Newsletter;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
+use App\Jobs\SendCampaignEmails;
 
 
 
@@ -73,6 +73,6 @@ class CampaignService
         return true;
     }
 
-    public function preview()
+
 
 }

@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Res;
 use App\Models\Campaign;
-use App\Services\CampaignService;
-use Auth;
+use App\Mail\NewsletterMail;
 use Illuminate\Http\Request;
+use App\Services\CampaignService;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 
 class CampaignController extends Controller
 {
 
     private CampaignService $campaignService;
 
-    public function __construct(CampaignService $campaignService) {
+    public function __construct(CampaignService $campaignService)
+    {
         $this->campaignService = $campaignService;
     }
 
@@ -78,8 +81,23 @@ class CampaignController extends Controller
         return Res::success('Campaign deleted successfully');
     }
 
-    public function send(Request $request, string $id){
+    public function send(Request $request, string $id)
+    {
         $res = $this->campaignService->send($request, $id);
         return $res ? Res::success('Campaign sent successfully', $res) : Res::error('Campaign sending failed');
+    }
+
+    public function preview(string $id)
+    {
+        $campaign = Campaign::findOrFail($id);
+        $subscriber = Auth::user();
+
+        $trackingUrl = URL::temporarySignedRoute(
+            'track.open',
+            now()->addMinutes(30),
+            ['campaign' => $campaign->id, 'subscriber' => $subscriber->id]
+        );
+
+        return new NewsletterMail($campaign, $subscriber, $trackingUrl);
     }
 }
