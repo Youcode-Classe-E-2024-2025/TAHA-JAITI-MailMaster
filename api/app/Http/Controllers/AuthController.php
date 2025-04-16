@@ -16,13 +16,18 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-    public function login(Request $request){
+
+
+    public function login(Request $request)
+    {
         $res = $this->authService->login($request);
 
         return $res ? Res::success($res, 'Login successful') : Res::error('Login failed', 401);
     }
 
-    public function register(Request $request){
+
+    public function register(Request $request)
+    {
         $res = $this->authService->register($request);
 
         return $res ? Res::success($res, 'Registration successful') : Res::error('Registration failed', 401);
