@@ -46,4 +46,12 @@ class CampaignService
         return $campaign;
     }
 
+    public function send(Request $request, string $id){
+        $campaign = Campaign::findOrFail($id);
+
+        if ($campaign->status === 'sent') {
+            return Res::error('Campaign already sent', 400);
+        }
+    }
+
 }

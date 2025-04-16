@@ -77,4 +77,9 @@ class CampaignController extends Controller
         $campaign->delete();
         return Res::success('Campaign deleted successfully');
     }
+
+    public function send(Request $request, string $id){
+        $res = $this->campaignService->send($request, $id);
+        return $res ? Res::success('Campaign sent successfully', $res) : Res::error('Campaign sending failed');
+    }
 }
