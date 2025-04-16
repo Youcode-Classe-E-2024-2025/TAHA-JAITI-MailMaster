@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Helpers\Res;
+use App\Jobs\SendCampaignEmails;
 use App\Models\Campaign;
 use App\Models\Newsletter;
+use App\Models\Subscriber;
 use Illuminate\Http\Request;
 
 
@@ -52,6 +55,24 @@ class CampaignService
         if ($campaign->status === 'sent') {
             return Res::error('Campaign already sent', 400);
         }
+
+        $validated = $request->validate([
+            'subscriber_ids' => 'required|array|min:1',
+            'subscriber_ids.*' => 'exists:subscribers,id',
+        ]);
+
+        $subscribers = Subscriber::whereIn('id', $validated['subscriber_ids'])->get();
+
+        if ($subscribers->isEmpty()) {
+            return Res::error('No subscribers found', 404);
+        }
+
+        $campaign->subscribers()->sync($validated['subscriber_ids']);
+        SendCampaignEmails::dispatch($campaign, $subscribers);
+
+        return true;
     }
+
+    public function preview()
 
 }
