@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Res;
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
 use App\Services\NewsletterService;
@@ -32,7 +33,9 @@ class NewsletterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $res = $this->newsletterService->save($request);
+
+        return $res ? Res::success('Newsletter created successfully', $res) : Res::error('Failed to create newsletter');
     }
 
     /**
@@ -40,7 +43,11 @@ class NewsletterController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $newsletter = Newsletter::find($id);
+        if (!$newsletter) {
+            return Res::error('Newsletter not found');
+        }
+        return Res::success('Newsletter retrieved successfully', $newsletter);
     }
 
     /**
