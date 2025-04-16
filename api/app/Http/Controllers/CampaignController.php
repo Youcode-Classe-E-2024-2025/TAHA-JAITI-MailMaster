@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use Auth;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -12,8 +13,10 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        return Campaign::whereHas('newsletter', function ($query) {
-            $query->where('user_id', auth()->id());
+        $user = Auth::user();
+
+        return Campaign::whereHas('newsletter', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
         })->get();
     }
 
