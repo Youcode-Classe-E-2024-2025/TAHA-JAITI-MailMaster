@@ -46,7 +46,12 @@ class CampaignController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $campaign = Campaign::findOrFail($id);
+        $user = Auth::user();
+        if ($campaign->newsletter->user_id !== $user->id) {
+            return Res::error('Unauthorized', 403);
+        }
+        return Res::success('Campaign retrieved successfully', $campaign);
     }
 
     /**
@@ -54,7 +59,8 @@ class CampaignController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $res = $this->campaignService->update($request, $id);
+        return $res ? Res::success('Campaign updated successfully', $res) : Res::error('Campaign update failed');
     }
 
     /**
@@ -62,6 +68,11 @@ class CampaignController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $campaign = Campaign::findOrFail($id);
+        $user = Auth::user();
+        if ($campaign->newsletter->user_id !== $user->id) {
+            return Res::error('Unauthorized', 403);
+        }
+        
     }
 }

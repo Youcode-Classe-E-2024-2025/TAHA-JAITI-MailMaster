@@ -22,10 +22,28 @@ class CampaignService
         $newsletter = Newsletter::findOrFail($validated['newsletter_id']);
 
         $campaign = Campaign::create([
-            'newsletter_id' => $validated['newsletter_id'],
+            'newsletter_id' => $newsletter->id,
             'status' => $validated['status'] ?? 'draft',
         ]);
+
+        return $campaign ?? null;
     }
 
+    public function update(Request $request, string $id)
+    {
+        $validated = $request->validate([
+            'status' => 'in:draft,sent',
+        ]);
+
+        $campaign = Campaign::findOrFail($id);
+
+        if ($validated['status']) {
+            $campaign->status = $validated['status'];
+        }
+
+        $campaign->save();
+
+        return $campaign;
+    }
 
 }
