@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class SubscriberController extends Controller
 {
 
-    private 
+    private  $subscriberService;
 
     /**
      * Display a listing of the resource.
